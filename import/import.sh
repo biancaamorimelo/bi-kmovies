@@ -48,7 +48,7 @@ import_mongo () {
     file=$1
     collection=`echo $2 | sed -e 's/[.]/_/'`    
 
-    [ -f $file ] && mongoimport --db tmdb --collection $collection --file $file --jsonArray
+    [ -f $file ] && mongoimport --db imdb --collection $collection --file $file --jsonArray
     echo "------------------------------------------------"
     echo " "
 }
