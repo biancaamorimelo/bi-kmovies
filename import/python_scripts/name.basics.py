@@ -6,7 +6,7 @@ import os
 #######################################################################
 # Desenvolvido por: Isleimar Oliveira
 # Descrição: Converte arquivos CSV para JSON
-# Comando: python3 convert_name_basics.py <input_file> <output_file> <options>
+# Comando: python3 name.basics.py <input_file> <output_file> <options>
 # Options:
 #   -n --null_value : valor nulo
 #   -i --ident_value : espaço da identação
