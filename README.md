@@ -1,6 +1,6 @@
-# NetflixTMDB: Análise de Popularidade de Filmes e Séries do Netflix.
+# NetflixTMDB: Análise de Popularidade de Filmes e Séries do Netflix
 
-## Projeto final da disciplina de Gerenciamento de Dados do mestrado em TI do IFPB.
+### Projeto final da disciplina de Gerenciamento de Dados do Mestrado em TI do IFPB
 
 ## Equipe:
  - Antonio Alves de Sousa Junior
