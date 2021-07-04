@@ -93,7 +93,9 @@ def convertToJson():
             if not (attributes == null_value):
                 line["attributes"] = attributes
             
-            line["is_original_title"] = (int(line.pop("isOriginalTitle")) == 1)
+            is_original_title = line.pop("isOriginalTitle")
+            if not (is_original_title == null_value):
+                line["is_original_title"] = (int(is_original_title) == 1)
 
             with open(out_file, "a") as j_file:
                 if (i == 0):
