@@ -38,7 +38,7 @@ python_script () {
     script=$1
     file=$2
     json=$3
-    [ -f $script ] && python3 $script $file $json --remove_file
+    [ -f $script ] && python3 $script $file $json --remove_file 
     echo "------------------------------------------------"
     echo " "
 }
@@ -47,7 +47,6 @@ import_mongo () {
     echo "Importando para o MongoDB... "
     file=$1
     collection=`echo $2 | sed -e 's/[.]/_/'`    
-
     [ -f $file ] && mongoimport --db imdb --collection $collection --file $file --jsonArray
     echo "------------------------------------------------"
     echo " "
