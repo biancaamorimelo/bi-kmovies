@@ -16,7 +16,6 @@ import os
 #   --remove_file : excluir o arquivo de destino
 ######################################################################
 
-
 #Default Values 
 null_value = "\\N"
 ident_value = 2
@@ -26,7 +25,6 @@ in_file = ''
 out_file = ''
 count_limit = 0
 remove_file = False
-
 
 def arguments(args):  
     global null_value, ident_value, delimiter_value, sub_delimiter_value, remove_file, in_file, out_file, count_limit
@@ -112,7 +110,6 @@ def convertToJson():
         with open(out_file, "a") as j_file:
             j_file.write("]")
   
-
 def main(args):
     arguments(args)
     if ((remove_file) and (os.path.exists(out_file))):                
