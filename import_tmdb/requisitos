@@ -1,0 +1,17 @@
+#Criação do Virtual Environments
+
+##Requisitos - python3.8-venv ---> apt install python3.8-venv
+$ python3 -m venv tmdb_env
+###Ativando o ambiente
+$ source tmdb_env/bin/activate
+###Desativando
+$ deactivate
+
+##Instalando o mongoDb for python
+$ python3 -m pip install pymongo
+
+##Instalando o Requests
+$ pip3 install requests
+
+
+
