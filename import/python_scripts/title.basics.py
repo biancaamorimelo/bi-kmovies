@@ -80,7 +80,10 @@ def convertToJson():
             line["primary_title"] = line.pop("primaryTitle")
             line["original_title"] = line.pop("originalTitle")
             line["is_adult"] = not(int(line.pop("isAdult"))==0)
-            line["start_year"] = int(line.pop("startYear"))
+
+            start_year = line.pop("startYear")
+            if not (start_year == null_value):
+                line["start_year"] = int(start_year)
 
             #end_year
             end_year=line.pop("endYear")
