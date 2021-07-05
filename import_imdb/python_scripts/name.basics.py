@@ -75,9 +75,9 @@ def convertToJson():
             line = dict(zip(headers, row))
             line["_id"] = line.pop("nconst")
             line["primary_name"] = line.pop("primaryName")
-            birth_year = line.pop("birthYear")
 
             #birth_year
+            birth_year = line.pop("birthYear")
             if not (birth_year == null_value):
                 line["birth_year"] = int(birth_year)
             death_year = line.pop("deathYear")
