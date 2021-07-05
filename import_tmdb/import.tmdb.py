@@ -35,18 +35,18 @@ myquery ={
 }
 
 #Carregar variável do arquivo de configuração
-def get_key_values(): 
+def get_key_values():
     global vars
     if not os.path.isfile(file_name_env):
         return
-    with open(file_name_env) as file:        
-        for row in file:            
+    with open(file_name_env) as file:
+        for row in file:
             if (row.find(comment_char)!=-1):
                 row = row[:row.index(comment_char)]
-            v = [x.strip() for x in row.partition(equalit_char)[::2] if x.strip()]           
+            v = [x.strip() for x in row.partition(equalit_char)[::2] if x.strip()]
             if (len(v)==2):
                 vars[v[0]]=v[1]
-            elif (len(v)!=0):                
+            elif (len(v)!=0):
                 raise TypeError("Formato inválida para '{0}'".format(row.strip()))
 
 #Conectar ao servidor do MongoDB
@@ -56,21 +56,21 @@ def conect_mongo():
         mongo_url = vars["mongo_url"]
         mongo_port = vars["mongo_port"]
         vars["mongo_string"] = "mongodb://{0}:{1}".format(mongo_url,mongo_port)
-    
+
     mongo_client = pymongo.MongoClient(vars["mongo_string"])
     mongo_db = mongo_client[vars["mongo_db_name"]]
-    
+
 
 def get_movie_tmdb(id):
     global vars
     key = vars["tmdb_key"]
     url = vars["tmdb_api_url"].format(id,key)
-    rsp = requests.get(url)     
+    rsp = requests.get(url)
     if (rsp.status_code != 200):
-        return 
+        return
     return rsp.json()
 
-def get_page_movie():    
+def get_page_movie():
     global vars, myquery, page_index
     movies=[]
     page_size = vars["page_size"]
@@ -82,7 +82,7 @@ def get_page_movie():
         movie = get_movie_tmdb(doc["_id"])
         if (movie):
             movie["_id"] = doc["_id"]
-            movies.append(movie)        
+            movies.append(movie)
     return movies
 
 get_key_values()
@@ -91,11 +91,11 @@ conect_mongo()
 keep=True
 cont=0
 file_name="data/{0}".format(vars["tmp_file_name"])
-if (os.path.exists(file_name))):                
-        os.remove(file_name) 
+if (os.path.exists(file_name)):
+    os.remove(file_name)
 while(keep):
     movies = get_page_movie()
-    keep = (len(movies) > 0)    
+    keep = (len(movies) > 0)
     if keep:
         with open(file_name,"a") as file:
             for movie in movies:
@@ -109,4 +109,3 @@ while(keep):
 with open(file_name,"a") as file:
     file.write("]")
 print(movies)
-
