@@ -47,7 +47,7 @@ import_mongo () {
     echo "Importando para o MongoDB... "
     file=$1
     collection=`echo $2 | sed -e 's/[.]/_/'`    
-    [ -f $file ] && mongoimport --db imdb --collection $collection --file $file --jsonArray
+    [ -f $file ] && mongoimport --db movies --collection "imdb_$collection" --file $file --jsonArray
     echo "------------------------------------------------"
     echo " "
 }
@@ -55,6 +55,7 @@ import_mongo () {
 for i in ${IMPORTS[@]};
 do
     name="${i##*/}"
+    zip_name=$name
     filename="${name%.*}"
     name="${filename%.*}"
     pyname="python_scripts/$name.py"
@@ -62,7 +63,7 @@ do
     filecsv="$DATA$filename"
 
     import_file $i $DATA
-    extract_file "$DATA$filename"
+    extract_file "$DATA$zip_name"
     python_script $pyname "$DATA$filename" $json
     import_mongo $json $name    
 done

@@ -16,7 +16,7 @@ python3 import.tmdb.py
 file="${DATA}movies.json"
 echo "Importando para o MongoDB..."
 if [ -f $file ]; then
-    mongoimport --db tmdb --collection movies --file $file --jsonArray && \
+    mongoimport --db movies --collection tmdb_titles --file $file --jsonArray && \
     echo "Importação concluída."
 else 
     echo "Não foi possível achar o arquivo '$file'."

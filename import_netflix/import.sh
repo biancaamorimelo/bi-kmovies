@@ -22,7 +22,7 @@ import_mongo () {
     echo "Importando para o MongoDB... "
     file=$1
     collection=`echo $2 | sed -e 's/[.]/_/'`    
-    [ -f $file ] && mongoimport --db netflix --collection $collection --file $file --jsonArray
+    [ -f $file ] && mongoimport --db movies --collection $collection --file $file --jsonArray
     echo "------------------------------------------------"
     echo " "
 }
@@ -33,4 +33,4 @@ pyname="import.netflix.py"
 json="$DATA$name.json"
 
 python_script $pyname "$DATA$filename" $json
-import_mongo $json $name    
+import_mongo $json "netflix_title"    

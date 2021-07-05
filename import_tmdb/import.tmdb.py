@@ -15,7 +15,8 @@ equalit_char="="
 vars={
     "mongo_url":"localhost",
     "mongo_port":"27017",
-    "mongo_db_name":"imdb",
+    "mongo_db_name":"movies",
+    "mongo_collection_name":"imdb_title_basics",
     "page_size":50,
     "tmdb_api_url":"https://api.themoviedb.org/3/movie/{0}?api_key={1}&language=pt-BR",
     "limit_year":2020,
@@ -74,7 +75,7 @@ def get_page_movie():
     movies=[]
     page_size = vars["page_size"]
     offset = page_size * page_index
-    mongo_collection = mongo_db["title_basics"]
+    mongo_collection = mongo_db[vars["mongo_collection_name"]]
     docs = mongo_collection.find(myquery,{"_id": 1}).sort("_id",1).skip(offset).limit(page_size)
     page_index +=1
     for doc in docs:
@@ -90,6 +91,8 @@ conect_mongo()
 keep=True
 cont=0
 file_name="data/{0}".format(vars["tmp_file_name"])
+if (os.path.exists(file_name))):                
+        os.remove(file_name) 
 while(keep):
     movies = get_page_movie()
     keep = (len(movies) > 0)    
