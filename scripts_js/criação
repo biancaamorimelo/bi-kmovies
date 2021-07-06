@@ -1,0 +1,47 @@
+#Produção
+_id -> imdb_id (netflix)
+tipo -> type (netflix)
+titulo -> title (netflix)
+pais -> country (netflix)
+data_adição_netflix -> date_added (netflix)
+data_lançamento -> release_year (netflix)
+classificação -> rating (netflix)
+duração - > duration (netflix)
+genero -> listed_in (netflix)
+sinopse -> description (netflix)
+idioma_original -> original_language (tmdb)
+popularidade -> popularity (tmdb)
+lista_idiomas -> spoken_languages (tmdb)
+total_votos -> vote_count (tmdb)
+avaliação -> vote_average (tmdb)
+orçamento -> budget (tmdb)
+receita -> 
+palavras_chaves ->
+
+#Produtora
+id -> production_companies.id (tmdb)
+nome -> production_companies.name (tmdb)
+pais_origem -> production_companies.origin_country (tmdb)
+
+
+#Ator
+id -> id (imdb_title_principals )
+nome -> primary_name (imdb_name_basics)
+data_nascimento -> birth_year (imdb_name_basics)
+local_nascimento ->
+idade ->
+biografia ->
+numero_atuações ->
+
+
+#Direção
+id ->
+nome ->
+data_nascimento ->
+local_nascimento ->
+idade ->
+biografia ->
+tipos_produções ->
+departamento -> 
+
+

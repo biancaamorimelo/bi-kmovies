@@ -17,9 +17,11 @@ vars={
     "mongo_port":"27017",
     "mongo_db_name":"movies",
     "mongo_collection_name":"imdb_title_basics",
+    "mongo_collection_tmdb":"tmdb_titles",
     "page_size":50,
     "tmdb_api_url":"https://api.themoviedb.org/3/movie/{0}?api_key={1}&language=pt-BR",
-    "limit_year":2020,
+    "start_year":2000,
+    "final_year":2030,
     "tmp_file_name":"movies.json",
     "ident_value":2
 }
@@ -27,12 +29,7 @@ vars={
 mongo_client={}
 mongo_db={}
 page_index=0
-
-myquery ={
-    "start_year" : {
-        "$gte": vars["limit_year"]
-    }
-}
+total=0
 
 #Carregar variável do arquivo de configuração
 def get_key_values():
@@ -60,9 +57,24 @@ def conect_mongo():
     mongo_client = pymongo.MongoClient(vars["mongo_string"])
     mongo_db = mongo_client[vars["mongo_db_name"]]
 
+#Busca no mongoDB
+def get_movie_tmd_db(id):
+    global vars, mongo_db
+    collection = mongo_db[vars["mongo_collection_tmdb"]]    
+    query={
+        "_id" : {"$eq": id}
+    }
+    doc = collection.find_one(query)    
+    if (doc is None):
+        return    
+    return doc
+
 
 def get_movie_tmdb(id):
     global vars
+    doc = get_movie_tmd_db(id)
+    if not(doc is None):
+        return doc    
     key = vars["tmdb_key"]
     url = vars["tmdb_api_url"].format(id,key)
     rsp = requests.get(url)
@@ -71,15 +83,27 @@ def get_movie_tmdb(id):
     return rsp.json()
 
 def get_page_movie():
-    global vars, myquery, page_index
+    global vars, page_index,total
     movies=[]
     page_size = vars["page_size"]
     offset = page_size * page_index
     mongo_collection = mongo_db[vars["mongo_collection_name"]]
-    docs = mongo_collection.find(myquery,{"_id": 1}).sort("_id",1).skip(offset).limit(page_size)
+    myquery ={
+        "start_year" : {
+            "$gte": int(vars["start_year"]),
+            "$lt": int(vars["final_year"]) +1
+        }
+    }    
+    docs = mongo_collection.find(myquery,{"_id": 1}).sort([("start_year", -1),( "_id",1)]).skip(offset).limit(page_size)
+    if (docs.count(True) == 0):
+        return
     page_index +=1
     for doc in docs:
-        movie = get_movie_tmdb(doc["_id"])
+        total += 1        
+        try:
+            movie = get_movie_tmdb(doc["_id"])
+        except:
+            print ("Falha na conexão")
         if (movie):
             movie["_id"] = doc["_id"]
             movies.append(movie)
@@ -95,7 +119,7 @@ if (os.path.exists(file_name)):
     os.remove(file_name)
 while(keep):
     movies = get_page_movie()
-    keep = (len(movies) > 0)
+    keep = not (movies is None)
     if keep:
         with open(file_name,"a") as file:
             for movie in movies:
@@ -105,7 +129,7 @@ while(keep):
                     file.write(",")
                 json.dump(movie, file, indent=vars["ident_value"])
                 cont +=1
-            print("Gravando {0}".format(cont))
+            print("Gravando {0} -> Total testado {1}".format(cont, total))
 with open(file_name,"a") as file:
     file.write("]")
-print(movies)
+

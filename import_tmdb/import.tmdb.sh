@@ -18,7 +18,6 @@ python3 -m pip install pymongo
 echo "Instalando o Requests..."
 pip3 install requests
 
-
 echo "Importando dados do TMDB..."
 python3 import.tmdb.py
 
