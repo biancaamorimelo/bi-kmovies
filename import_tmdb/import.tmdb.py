@@ -16,7 +16,8 @@ vars={
     "mongo_url":"localhost",
     "mongo_port":"27017",
     "mongo_db_name":"movies",
-    "mongo_collection_name":"imdb_title_basics",
+    "mongo_collection_input":"netflix_imdb",
+    "imdb_id":"imdb_id",
     "mongo_collection_tmdb":"tmdb_titles",
     "page_size":50,
     "tmdb_api_url":"https://api.themoviedb.org/3/movie/{0}?api_key={1}&language=pt-BR",
@@ -87,25 +88,26 @@ def get_page_movie():
     movies=[]
     page_size = vars["page_size"]
     offset = page_size * page_index
-    mongo_collection = mongo_db[vars["mongo_collection_name"]]
+    mongo_collection = mongo_db[vars["mongo_collection_input"]]
     myquery ={
-        "start_year" : {
-            "$gte": int(vars["start_year"]),
-            "$lt": int(vars["final_year"]) +1
-        }
+        
     }    
-    docs = mongo_collection.find(myquery,{"_id": 1}).sort([("start_year", -1),( "_id",1)]).skip(offset).limit(page_size)
+        
+    docs = mongo_collection.find(myquery,{vars["imdb_id"]: 1}).sort([( "_id",1)]).skip(offset).limit(page_size)
+
     if (docs.count(True) == 0):
         return
     page_index +=1
     for doc in docs:
-        total += 1        
+        total += 1  
+        print(doc)      
+        id = doc[vars["imdb_id"]]
         try:
-            movie = get_movie_tmdb(doc["_id"])
+            movie = get_movie_tmdb(id)
         except:
             print ("Falha na conexão")
         if (movie):
-            movie["_id"] = doc["_id"]
+            movie["_id"] = id
             movies.append(movie)
     return movies
 

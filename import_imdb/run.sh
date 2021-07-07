@@ -62,8 +62,10 @@ do
     json="$DATA$name.json"
     filecsv="$DATA$filename"
 
-    import_file $i $DATA
-    extract_file "$DATA$zip_name"
-    python_script $pyname "$DATA$filename" $json
+    if [ ! -f $json ]; then
+        import_file $i $DATA
+        extract_file "$DATA$zip_name"
+        python_script $pyname "$DATA$filename" $json
+    fi
     import_mongo $json $name    
 done

@@ -7,3 +7,7 @@
  - Bianca Karla Amorim de Sousa Melo
  - Isleimar de Souza Oliveira
  - Janderson Ferreira Dutra
+
+## Configurações
+ - Crie a pasta data dentro de import_netflix e insira o arquivo netflix_titles.csv
+ - Execulte o arquivo start.sh

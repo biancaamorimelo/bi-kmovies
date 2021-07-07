@@ -3,7 +3,7 @@ db.netflix_imdb.aggregate([
         _id: "$imdb_id",
         netflix_id: "$_id",
         tipo: "$type",
-        titulo: "title",
+        titulo: "$title",
         pais: "$country",
         data_adicao: "$date_added",
         data_lancamento: "$release_year",
@@ -31,26 +31,6 @@ db.netflix_imdb.aggregate([
 
     }}
     ,{$unset: "tmdb"}    
-    //-----Produtora---------------------------------------
-    // ,{$unwind: {
-    //      path: "$produtoras",
-    //      preserveNullAndEmptyArrays: true
-    // }}
-    // ,{$addFields: {
-    //     produtoras :{ 
-    //         nome:  "$produtoras.name",
-    //         pais_origem: "$produtoras.origin_country"
-    //     }
-    // }}
-    // ,{$unset: [
-    //     "produtoras.name",
-    //     "produtoras.origin_country",
-    //     "produtoras.logo_path"
-    // ]}
-    // ,{ $group:{
-    //     _id: "$_id",        
-    //     produtoras: {$push: "$produtoras"}
-    // }}
     //--------Ator---------------------------------------
     ,{$lookup: {
         from: "imdb_title_principals",
