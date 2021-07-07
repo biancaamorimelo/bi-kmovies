@@ -32,5 +32,13 @@ name="${filename%.*}"
 pyname="import.netflix.py"
 json="$DATA$name.json"
 
+
 python_script $pyname "$DATA$filename" $json
 import_mongo $json "netflix_title"    
+
+echo "Rodando script de criação netflix_imdb"
+mongo movies create_netflix_tmdb.js
+
+echo "Ciando index"
+mongo movies create_index.js
+

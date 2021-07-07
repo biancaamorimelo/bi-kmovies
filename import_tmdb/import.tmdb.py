@@ -99,8 +99,7 @@ def get_page_movie():
         return
     page_index +=1
     for doc in docs:
-        total += 1  
-        print(doc)      
+        total += 1      
         id = doc[vars["imdb_id"]]
         try:
             movie = get_movie_tmdb(id)

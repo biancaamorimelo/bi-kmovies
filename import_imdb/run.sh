@@ -69,3 +69,6 @@ do
     fi
     import_mongo $json $name    
 done
+
+echo "Criando indexs"
+mongo movies create_index.js
