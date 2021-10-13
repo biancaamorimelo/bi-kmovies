@@ -1,4 +1,4 @@
-# NetflixTMDB: Análise de Popularidade de Filmes e Séries do Netflix
+# BI Kmovies: analisando dados sobre filmes de uma plataforma de streaming
 
 ### Projeto final da disciplina de Gerenciamento de Dados do Mestrado em TI do IFPB
 
